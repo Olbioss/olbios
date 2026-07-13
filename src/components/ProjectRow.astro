@@ -18,7 +18,7 @@ const href = localePath(locale, `/projects/${slug}`);
 const num = String(index + 1).padStart(2, "0");
 ---
 
-<li class="relative">
+<li class="reveal-scroll relative" style={`--d:${Math.min(index, 4) * 70}ms`}>
   <a
     href={href}
     class="group relative grid grid-cols-[2.5rem_1fr_auto] items-center gap-x-4 border-t border-line py-6 transition-colors duration-200 hover:z-10 sm:grid-cols-[4.5rem_1fr_auto] sm:gap-x-8 sm:py-9"
@@ -55,7 +55,7 @@ const num = String(index + 1).padStart(2, "0");
 
     <span
       aria-hidden="true"
-      class="text-xl text-muted transition-all duration-300 group-hover:translate-x-1.5 group-hover:text-bg sm:text-2xl"
+      class="text-xl text-muted transition-[transform,color] duration-300 group-hover:translate-x-1.5 group-hover:text-bg motion-reduce:transition-none motion-reduce:group-hover:translate-x-0 sm:text-2xl"
     >
       →
     </span>
@@ -63,7 +63,7 @@ const num = String(index + 1).padStart(2, "0");
     {/* floating preview — desktop only */}
     <span
       aria-hidden="true"
-      class="pointer-events-none absolute right-30 top-1/2 z-20 hidden w-80 translate-y-[-46%] rotate-[-2.5deg] opacity-0 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-1/2 group-hover:rotate-0 group-hover:opacity-100 motion-reduce:transition-none lg:block"
+      class="pointer-events-none absolute right-30 top-1/2 z-20 hidden w-80 translate-y-[-46%] rotate-[-2.5deg] opacity-0 transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-1/2 group-hover:rotate-0 group-hover:opacity-100 motion-reduce:transition-none lg:block"
     >
       <Image
         src={thumbnail}

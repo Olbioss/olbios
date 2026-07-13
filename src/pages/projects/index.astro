@@ -25,7 +25,7 @@ const projects = (await getCollection("projects"))
         {tf("index.count").replace("{n}", String(projects.length))}
       </p>
     </header>
-    <div class="reveal" style="--d:170ms">
+    <div>
       <ProjectIndex projects={projects} />
     </div>
   </main>

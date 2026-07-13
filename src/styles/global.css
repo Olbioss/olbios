@@ -183,8 +183,20 @@ body {
   animation-delay: var(--d, 0ms);
 }
 
+/* Scroll-reveal — rise `.reveal-scroll` in once as it enters the viewport.
+   Hidden state is scripting-gated so no-JS users always see content. */
+@media (scripting: enabled) {
+  .reveal-scroll {
+    opacity: 0;
+  }
+  .reveal-scroll.is-visible {
+    animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0ms) forwards;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .reveal,
+  .reveal-scroll {
     opacity: 1;
     animation: none;
   }

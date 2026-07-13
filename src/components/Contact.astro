@@ -11,19 +11,23 @@ const tf = t(locale);
   aria-labelledby="contact-heading"
   class="mx-auto max-w-6xl px-6 py-16 sm:px-10 sm:py-24"
 >
-  <h2 id="contact-heading" class="label text-muted">
+  <h2 id="contact-heading" class="reveal-scroll label text-muted" style="--d:0ms">
     <span class="text-accent">03</span>&ensp;{tf("section.contact")}
   </h2>
-  <p class="mt-10 max-w-md font-serif text-lg leading-relaxed text-muted">
+  <p
+    class="reveal-scroll mt-10 max-w-md font-serif text-lg leading-relaxed text-muted"
+    style="--d:90ms"
+  >
     {tf("contact.lead")}
   </p>
   <a
     href={`mailto:${site.email}`}
-    class="display mt-5 inline-block break-all text-[clamp(1.625rem,5.5vw,4.25rem)] underline decoration-line decoration-2 underline-offset-8 transition-colors duration-200 hover:text-accent hover:decoration-accent"
+    class="reveal-scroll display mt-5 inline-block break-all text-[clamp(1.625rem,5.5vw,4.25rem)] underline decoration-line decoration-2 underline-offset-8 transition-colors duration-200 hover:text-accent hover:decoration-accent"
+    style="--d:160ms"
   >
     {site.email}
   </a>
-  <ul class="mt-12 flex flex-wrap gap-8">
+  <ul class="reveal-scroll mt-12 flex flex-wrap gap-8" style="--d:230ms">
     {
       site.socials.map((s) => (
         <li>

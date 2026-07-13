@@ -12,11 +12,15 @@ const tf = t(locale);
 >
   <h2
     id="about-heading"
-    class="label self-start text-muted sm:sticky sm:top-24"
+    class="reveal-scroll label self-start text-muted sm:sticky sm:top-24"
+    style="--d:0ms"
   >
     <span class="text-accent">02</span>&ensp;{tf("section.about")}
   </h2>
-  <div class="max-w-2xl space-y-6 font-serif text-[1.1875rem] leading-[1.75]">
+  <div
+    class="reveal-scroll max-w-2xl space-y-6 font-serif text-[1.1875rem] leading-[1.75]"
+    style="--d:90ms"
+  >
     {
       locale === "en" ? (
         <>

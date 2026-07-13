@@ -1,0 +1,41 @@
+---
+import { getCollection } from "astro:content";
+import ProjectIndex from "./ProjectIndex.astro";
+import { asLocale, t, localePath } from "../i18n/ui";
+
+const locale = asLocale(Astro.currentLocale);
+const tf = t(locale);
+
+const featured = (await getCollection("projects"))
+  .filter(
+    (project) => project.data.featured && project.id.startsWith(`${locale}/`),
+  )
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<section
+  id="projects"
+  aria-labelledby="projects-heading"
+  class="mx-auto max-w-6xl px-6 py-16 sm:px-10 sm:py-24"
+>
+  <div class="mb-10 flex items-baseline justify-between sm:mb-14">
+    <h2 id="projects-heading" class="label text-muted">
+      <span class="text-accent">01</span>&ensp;{tf("section.work")}
+    </h2>
+    <a
+      href={localePath(locale, "/projects")}
+      class="label draw hidden text-muted hover:text-fg sm:inline"
+    >
+      {tf("work.fullIndex")}
+    </a>
+  </div>
+
+  <ProjectIndex projects={featured} />
+
+  <a
+    href={localePath(locale, "/projects")}
+    class="label draw mt-10 inline-block text-muted hover:text-fg sm:hidden"
+  >
+    {tf("work.fullIndex")}
+  </a>
+</section>

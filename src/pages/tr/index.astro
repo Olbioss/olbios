@@ -1,0 +1,20 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Hero from "../../components/Hero.astro";
+import Projects from "../../components/Projects.astro";
+import About from "../../components/About.astro";
+import Contact from "../../components/Contact.astro";
+import { site } from "../../data/site";
+import { asLocale, t } from "../../i18n/ui";
+
+const tf = t(asLocale(Astro.currentLocale));
+---
+
+<Layout title={`${site.name} — ${tf("title.home")}`} description={tf("meta.home")}>
+  <main>
+    <Hero />
+    <Projects />
+    <About />
+    <Contact />
+  </main>
+</Layout>

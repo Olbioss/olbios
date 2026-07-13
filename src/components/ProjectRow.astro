@@ -1,0 +1,78 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import { asLocale, localePath } from "../i18n/ui";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const { name, thumbnail, tags } = project.data;
+
+// Entry ids are locale-prefixed ("tr/stack-shop"); the URL slug is shared.
+const locale = asLocale(Astro.currentLocale);
+const slug = project.id.split("/")[1] ?? project.id;
+const href = localePath(locale, `/projects/${slug}`);
+const num = String(index + 1).padStart(2, "0");
+---
+
+<li class="relative">
+  <a
+    href={href}
+    class="group relative grid grid-cols-[2.5rem_1fr_auto] items-center gap-x-4 border-t border-line py-6 transition-colors duration-200 hover:z-10 sm:grid-cols-[4.5rem_1fr_auto] sm:gap-x-8 sm:py-9"
+  >
+    {/* inversion backdrop — bleeds past the container gutters */}
+    <span
+      aria-hidden="true"
+      class="absolute -inset-x-6 inset-y-0 -z-10 origin-bottom scale-y-0 bg-fg transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-y-100 motion-reduce:transition-none sm:-inset-x-10"
+    ></span>
+
+    <span
+      class="label self-baseline pt-1 text-muted transition-colors duration-200 group-hover:text-bg/60 sm:pt-2"
+    >
+      {num}
+    </span>
+
+    <span class="min-w-0">
+      <span
+        class="display block text-[clamp(1.625rem,4.5vw,3rem)] transition-colors duration-200 group-hover:text-bg"
+      >
+        {name}
+      </span>
+      {
+        tags.length > 0 && (
+          <span
+            lang="en"
+            class="label mt-2.5 block text-muted transition-colors duration-200 group-hover:text-bg/60"
+          >
+            {tags.join(" · ")}
+          </span>
+        )
+      }
+    </span>
+
+    <span
+      aria-hidden="true"
+      class="text-xl text-muted transition-all duration-300 group-hover:translate-x-1.5 group-hover:text-bg sm:text-2xl"
+    >
+      →
+    </span>
+
+    {/* floating preview — desktop only */}
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute right-30 top-1/2 z-20 hidden w-80 translate-y-[-46%] rotate-[-2.5deg] opacity-0 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-1/2 group-hover:rotate-0 group-hover:opacity-100 motion-reduce:transition-none lg:block"
+    >
+      <Image
+        src={thumbnail}
+        alt=""
+        width={640}
+        height={360}
+        loading="lazy"
+        class="w-full border border-bg/25 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.45)]"
+      />
+    </span>
+  </a>
+</li>

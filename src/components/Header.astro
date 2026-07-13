@@ -1,0 +1,61 @@
+---
+import { site } from "../data/site";
+import ThemeToggle from "./ThemeToggle.astro";
+import { asLocale, t, localePath, alternatePath } from "../i18n/ui";
+
+const locale = asLocale(Astro.currentLocale);
+const tf = t(locale);
+
+const navItems = [
+  {
+    label: tf("nav.projects"),
+    href: localePath(locale, "/projects"),
+    always: true,
+  },
+  { label: tf("nav.about"), href: localePath(locale, "/#about"), always: false },
+  {
+    label: tf("nav.contact"),
+    href: localePath(locale, "/#contact"),
+    always: false,
+  },
+];
+
+const switchHref = alternatePath(Astro.url.pathname);
+const switchLabel = locale === "en" ? "TR" : "EN";
+---
+
+<header class="sticky top-0 z-50 border-b border-line bg-bg/85 backdrop-blur-sm">
+  <div
+    class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-10"
+  >
+    <a
+      href={localePath(locale, "/")}
+      class="text-[0.9375rem] font-[680] tracking-tight transition-colors hover:text-accent"
+    >
+      {site.name}<span class="text-accent">.</span>
+    </a>
+    <nav class="flex items-center gap-5 sm:gap-7">
+      <ul class="flex items-center gap-5 sm:gap-7">
+        {
+          navItems.map((item) => (
+            <li class={item.always ? "" : "hidden sm:block"}>
+              <a href={item.href} class="label draw text-muted hover:text-fg">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a
+            href={switchHref}
+            class="label draw text-accent"
+            aria-label={tf("a11y.switchLocale")}
+          >
+            {switchLabel}
+          </a>
+        </li>
+      </ul>
+      <ThemeToggle />
+    </nav>
+  </div>
+</header>

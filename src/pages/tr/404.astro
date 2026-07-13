@@ -1,0 +1,37 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { site } from "../../data/site";
+import { asLocale, t, localePath } from "../../i18n/ui";
+
+const locale = asLocale(Astro.currentLocale);
+const tf = t(locale);
+---
+
+<Layout title={`404 — ${site.name}`} description={tf("notfound.lead")}>
+  <main
+    class="mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-center px-6 py-24 sm:px-10"
+  >
+    <p class="reveal label text-muted" style="--d:0ms">
+      <span class="text-accent">404</span>
+    </p>
+    <h1
+      class="reveal display mt-6 text-[clamp(3rem,8vw,6.5rem)]"
+      style="--d:90ms"
+    >
+      {tf("notfound.title")}<span class="text-accent">.</span>
+    </h1>
+    <p
+      class="reveal mt-8 max-w-md font-serif text-lg leading-relaxed text-muted"
+      style="--d:170ms"
+    >
+      {tf("notfound.lead")}
+    </p>
+    <a
+      href={localePath(locale, "/")}
+      class="reveal label draw mt-10 inline-block hover:text-accent"
+      style="--d:250ms"
+    >
+      {tf("notfound.home")}
+    </a>
+  </main>
+</Layout>

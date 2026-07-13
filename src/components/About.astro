@@ -1,0 +1,57 @@
+---
+import { asLocale, t } from "../i18n/ui";
+
+const locale = asLocale(Astro.currentLocale);
+const tf = t(locale);
+---
+
+<section
+  id="about"
+  aria-labelledby="about-heading"
+  class="mx-auto grid max-w-6xl gap-x-16 gap-y-8 px-6 py-16 sm:grid-cols-[11rem_1fr] sm:px-10 sm:py-24"
+>
+  <h2
+    id="about-heading"
+    class="label self-start text-muted sm:sticky sm:top-24"
+  >
+    <span class="text-accent">02</span>&ensp;{tf("section.about")}
+  </h2>
+  <div class="max-w-2xl space-y-6 font-serif text-[1.1875rem] leading-[1.75]">
+    {
+      locale === "en" ? (
+        <>
+          <p>
+            I'm a full-stack developer working mostly in TypeScript. I've
+            shipped six production apps end to end — real-time chat, RAG
+            document Q&A, a multi-vendor e-commerce platform, a food-delivery
+            marketplace, a movie &amp; TV discovery app, and an SEO-first client
+            site — across React, Next.js, TanStack Start, and Astro.
+          </p>
+          <p>
+            I care about the unglamorous parts: auth that holds up (
+            <em class="text-accent">JWT · OAuth · RLS · 2FA</em>), payments that
+            reconcile (Stripe webhooks), and maintainable backend architecture.
+            Node with Postgres or MongoDB underneath.
+          </p>
+        </>
+      ) : (
+        <>
+          <p>
+            Ağırlıklı olarak TypeScript ile çalışan bir full-stack
+            geliştiriciyim. Altı üretim uygulamasını uçtan uca hayata geçirdim —
+            gerçek zamanlı sohbet, RAG tabanlı belge soru-cevabı, çok satıcılı
+            bir e-ticaret platformu, bir yemek siparişi pazaryeri, bir film ve
+            dizi keşif uygulaması ve SEO odaklı bir müşteri sitesi — React,
+            Next.js, TanStack Start ve Astro ile.
+          </p>
+          <p>
+            Gösterişsiz ama kritik kısımlara önem veririm: sağlam kimlik
+            doğrulama (<em class="text-accent">JWT · OAuth · RLS · 2FA</em>),
+            doğru işleyen ödemeler (Stripe webhook'ları) ve sürdürülebilir
+            backend mimarisi. Altta Node ile Postgres ya da MongoDB.
+          </p>
+        </>
+      )
+    }
+  </div>
+</section>

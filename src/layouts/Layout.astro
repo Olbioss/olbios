@@ -1,0 +1,107 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { Font } from "astro:assets";
+import { asLocale, alternatePath, t } from "../i18n/ui";
+import { site } from "../data/site";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+const locale = asLocale(Astro.currentLocale);
+const tf = t(locale);
+const metaDescription = description ?? tf("meta.default");
+const path = Astro.url.pathname;
+// Slugs are shared across locales, so the alternate is a pure path transform.
+const trPath = locale === "en" ? alternatePath(path) : path;
+const enPath = locale === "en" ? path : alternatePath(path);
+
+// Absolute URLs once a canonical `site` is configured; fall back to paths in dev.
+const abs = (p: string) => (Astro.site ? new URL(p, Astro.site).href : p);
+const canonicalURL = abs(path);
+const ogImage = abs("/og.png");
+const ogLocale = locale === "tr" ? "tr_TR" : "en_US";
+const ogLocaleAlt = locale === "tr" ? "en_US" : "tr_TR";
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#faf9f5"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#0e0e0c"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={metaDescription} />
+    <title>{title}</title>
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" hreflang="tr" href={abs(trPath)} />
+    <link rel="alternate" hreflang="en" href={abs(enPath)} />
+    <link rel="alternate" hreflang="x-default" href={abs(enPath)} />
+
+    {/* Open Graph */}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={ogLocaleAlt} />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={ogImage} />
+    {/* Set theme before paint to avoid a flash of the wrong theme. */}
+    <script is:inline>
+      const stored = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+      document.documentElement.classList.toggle(
+        "dark",
+        stored ? stored === "dark" : prefersDark,
+      );
+    </script>
+    <Font
+      cssVariable="--font-brico"
+      preload={[
+        { subset: "latin", style: "normal" },
+        { subset: "latin-ext", style: "normal" },
+      ]}
+    />
+    <Font
+      cssVariable="--font-news"
+      preload={[
+        { subset: "latin", style: "normal" },
+        { subset: "latin-ext", style: "normal" },
+      ]}
+    />
+  </head>
+  <body id="top" class="min-h-screen bg-bg font-sans text-fg antialiased">
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,32 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import ProjectIndex from "../../components/ProjectIndex.astro";
+import { site } from "../../data/site";
+import { asLocale, t } from "../../i18n/ui";
+
+const locale = asLocale(Astro.currentLocale);
+const tf = t(locale);
+
+const projects = (await getCollection("projects"))
+  .filter((project) => project.id.startsWith(`${locale}/`))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<Layout title={`${tf("index.title")} — ${site.name}`} description={tf("meta.index")}>
+  <main class="mx-auto max-w-6xl px-6 py-16 sm:px-10 sm:py-24">
+    <header
+      class="mb-12 flex flex-wrap items-baseline justify-between gap-x-16 gap-y-4 sm:mb-16"
+    >
+      <h1 class="reveal display text-[clamp(3rem,8vw,6.5rem)]" style="--d:0ms">
+        {tf("index.title")}<span class="text-accent">.</span>
+      </h1>
+      <p class="reveal label text-muted" style="--d:90ms">
+        {tf("index.count").replace("{n}", String(projects.length))}
+      </p>
+    </header>
+    <div class="reveal" style="--d:170ms">
+      <ProjectIndex projects={projects} />
+    </div>
+  </main>
+</Layout>

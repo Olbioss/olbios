@@ -1,0 +1,58 @@
+---
+import { site } from "../data/site";
+import { asLocale, t } from "../i18n/ui";
+
+const locale = asLocale(Astro.currentLocale);
+const tf = t(locale);
+---
+
+<section class="mx-auto max-w-6xl px-6 pb-20 pt-20 sm:px-10 sm:pb-28 sm:pt-32">
+  <p class="reveal label text-muted" style="--d:0ms">
+    <span lang="en">{site.name}</span> — {tf("hero.role")}
+  </p>
+  <h1
+    class="reveal display mt-8 text-[clamp(3.25rem,9.5vw,7.75rem)]"
+    style="--d:90ms"
+  >
+    {
+      locale === "en" ? (
+        <>
+          Web apps,
+          <br />
+          built{" "}
+          <em class="font-serif font-medium italic tracking-[-0.01em] text-accent">
+            end to end
+          </em>
+          .
+        </>
+      ) : (
+        <>
+          Web uygulamaları,
+          <br />
+          <em class="font-serif font-medium italic tracking-[-0.01em] text-accent">
+            uçtan uca
+          </em>
+          .
+        </>
+      )
+    }
+  </h1>
+  <div
+    class="mt-12 flex flex-wrap items-end justify-between gap-x-16 gap-y-10 sm:mt-16"
+  >
+    <p
+      class="reveal max-w-md font-serif text-lg leading-relaxed text-muted"
+      style="--d:180ms"
+    >
+      {tf("hero.tagline")}
+    </p>
+    <div class="reveal flex items-center gap-8" style="--d:260ms">
+      <a href="#projects" class="label draw hover:text-accent">
+        {tf("hero.cta.work")}
+      </a>
+      <a href="#contact" class="label draw text-muted hover:text-fg">
+        {tf("hero.cta.contact")}
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,24 @@
+---
+import { site } from "../data/site";
+import { asLocale, t } from "../i18n/ui";
+
+const tf = t(asLocale(Astro.currentLocale));
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-28 border-t border-line">
+  <div
+    class="label mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-8 gap-y-3 px-6 py-8 text-muted sm:px-10"
+  >
+    <p>© {year} <span lang="en">{site.name}</span></p>
+    <div class="flex items-center gap-8">
+      <a
+        href="https://astro.build"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="draw hover:text-fg">{tf("footer.built")}</a
+      >
+      <a href="#top" class="draw hover:text-fg">{tf("footer.top")}</a>
+    </div>
+  </div>
+</footer>

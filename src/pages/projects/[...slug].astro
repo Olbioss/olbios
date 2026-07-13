@@ -1,0 +1,94 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "../../layouts/Layout.astro";
+import { site } from "../../data/site";
+import { asLocale, t, localePath } from "../../i18n/ui";
+
+// This file serves the default locale (en); src/pages/tr mirrors it for Turkish.
+const PAGE_LOCALE = "en";
+
+export const getStaticPaths = (async () => {
+  const projects = await getCollection("projects");
+  return projects
+    .filter((project) => project.id.startsWith("en/"))
+    .map((project) => ({
+      params: { slug: project.id.split("/")[1] },
+      props: { project },
+    }));
+}) satisfies GetStaticPaths;
+
+const { project } = Astro.props;
+const { name, description, thumbnail, liveUrl, sourceUrl, tags } = project.data;
+const { Content } = await render(project);
+const tf = t(asLocale(PAGE_LOCALE));
+---
+
+<Layout title={`${name} — ${site.name}`} description={description}>
+  <main class="mx-auto max-w-6xl px-6 py-14 sm:px-10 sm:py-20">
+    <a
+      href={localePath(PAGE_LOCALE, "/projects")}
+      class="label draw text-muted hover:text-fg"
+    >
+      {tf("detail.back")}
+    </a>
+
+    <header class="mt-10 max-w-4xl sm:mt-14">
+      {
+        tags.length > 0 && (
+          <p lang="en" class="label text-muted">
+            {tags.join(" · ")}
+          </p>
+        )
+      }
+      <h1
+        class="reveal display mt-5 text-[clamp(2.75rem,7vw,5.5rem)]"
+        style="--d:0ms"
+      >
+        {name}
+      </h1>
+      <p
+        class="reveal mt-6 max-w-2xl font-serif text-xl leading-relaxed text-muted"
+        style="--d:90ms"
+      >
+        {description}
+      </p>
+      <div class="reveal mt-9 flex flex-wrap gap-8" style="--d:170ms">
+        <a
+          href={liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="label draw text-accent"
+        >
+          {tf("detail.live")}
+        </a>
+        {
+          sourceUrl && (
+            <a
+              href={sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="label draw text-muted hover:text-fg"
+            >
+              {tf("detail.source")}
+            </a>
+          )
+        }
+      </div>
+    </header>
+
+    <Image
+      src={thumbnail}
+      alt={tf("detail.previewAlt").replace("{name}", name)}
+      width={1280}
+      height={720}
+      class="reveal mt-12 aspect-video w-full border border-line object-cover sm:mt-16"
+      style="--d:240ms"
+    />
+
+    <article class="prose mt-12 max-w-3xl sm:mt-16">
+      <Content />
+    </article>
+  </main>
+</Layout>

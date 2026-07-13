@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://olbios.CHANGEME.workers.dev/sitemap-index.xml
+Sitemap: https://olbios.olbios88.workers.dev/sitemap-index.xml

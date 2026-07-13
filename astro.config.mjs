@@ -3,13 +3,9 @@ import { defineConfig, fontProviders } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
-// Canonical origin — used for canonical/OG/hreflang tags and the sitemap.
-// TODO: replace CHANGEME with the real workers.dev subdomain before deploy.
-const SITE = "https://olbios.CHANGEME.workers.dev";
-
 // https://astro.build/config
 export default defineConfig({
-  site: SITE,
+  site: "https://olbios.olbios88.workers.dev",
   i18n: {
     defaultLocale: "en",
     locales: ["tr", "en"],

@@ -1,5 +1,5 @@
 name = "olbios"
-compatibility_date = "2026-06-26"
+compatibility_date = "2026-07-13"
 
 # For branch testing etc. 
 # workers_dev = false

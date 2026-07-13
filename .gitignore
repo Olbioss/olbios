@@ -24,7 +24,6 @@ pnpm-debug.log*
 .idea/
 
 .claude
-.vscode
 
 .dev.vars*
 !.dev.vars.example
